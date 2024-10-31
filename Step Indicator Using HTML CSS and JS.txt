@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+font-family: Arial, sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+background-color: #333
+}
+.container {
+text-align: center;
+}
+.steps {
+display: flex;
+justify-content: space-around;
+background-color: #222;
+margin-bottom: 20px;
+box-shadow: 0px 0px 10px #4CAF50;
+padding: 20px;
+width: 330px;
+border-radius: 5px;
+}
+.step {
+width: 30px;
+height: 30px;
+line-height: 30px;
+border-radius: 50%;
+background: #333;
+color: #fff;
+}
+.step.active,
+.step.completed {
+background: #4CAF50;
+}
+button {
+padding: 7px 20px;
+border: none;
+border-radius: 5px;
+background: #4CAF50;
+color: #fff;
+cursor: pointer;
+margin: 10px 5px;
+}
+button:disabled {
+background: #ccc;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="steps">
+<div class="step active">1</div>
+<div class="step">2</div>
+<div class="step">3</div>
+<div class="step">4</div>
+</div>
+<button onclick="changeStep(-1)" id="prevBtn" disabled>Prev</button>
+<button onclick="changeStep(1)" id="nextBtn">Next</button>
+</div>
+<script>
+let currentStep = 0;
+const steps = document.querySelectorAll(".step");
+function showStep(step) {
+steps.forEach((el, i) => {
+el.classList.toggle("active", i === step);
+el.classList.toggle("completed", i < step);
+});
+document.getElementById("prevBtn").disabled = step === 0;
+document.getElementById("nextBtn").innerText = step === steps.length - 1 ? "Finish" : "Next";
+}
+function changeStep(step) {
+currentStep += step;
+if (currentStep < 0) currentStep = 0;
+if (currentStep >= steps.length) currentStep = steps.length - 1;
+showStep(currentStep);
+}
+showStep(currentStep);
+</script>
+</body>
+</html>
